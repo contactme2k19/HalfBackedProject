@@ -1,9 +1,7 @@
 # Build and Release Folders
-bin-debug/
-bin-release/
-[Oo]bj/
-[Bb]in/
-
+/ExtReport/
+/test-output/
+/target/
 # Other files and folders
 .settings/
 
@@ -12,6 +10,9 @@ bin-release/
 *.air
 *.ipa
 *.apk
+*.classpath
+*.project
+
 
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
 # should NOT be excluded as they contain compiler settings and other important
