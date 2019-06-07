@@ -16,15 +16,14 @@ public class ExtentManager {
 		if (extent == null) {
 			
 			try {
-				 String propertyFilePath="./config.properties";
+				/* String propertyFilePath="./config.properties";
 				 BufferedReader reader;
 			
 			reader = new BufferedReader(new FileReader(propertyFilePath));
 			Properties props = new Properties();
-			props.load(reader);
-			String reportFileName = props.getProperty("reportFolderName");
-			// System.out.println("FileValue"+reportFileName);
-				System.out.println("DIR-->"+System.getProperty("user.dir"));
+			props.load(reader);*/
+				PropertyFileReader reportName=new PropertyFileReader();
+			String reportFileName = reportName.reportName();
 			Date d=new Date();
 			String fileName=d.toString().replace(":", "_").replace(" ", "_")+".html";
 			extent = new ExtentReports(System.getProperty("user.dir")+"\\"+reportFileName+"\\"+fileName,true, DisplayOrder.NEWEST_FIRST);
