@@ -37,5 +37,18 @@ String reportName= properties.getProperty("reportFolderName");
 if(reportName!=null) return reportName;
 else throw new RuntimeException("Report Name not specified in the Config.properties file.");
 	}
+/* To get the PatientLoader filePath For Destination and Source */
+	public String fileLoactionFromLoad() {
+	String sourceFilePath= properties.getProperty("sourceFolder");
+	if(sourceFilePath!=null) return sourceFilePath;
+	else throw new RuntimeException("File Path is not specified in the propertyFiles");
+	}
+
+	/* To get the PatientLoader filePath For Destination and Source */
+	public String fileLoactionToLoad() {
+	String destinationFilePath= properties.getProperty("destination");
+	if(destinationFilePath!=null) return destinationFilePath;
+	else throw new RuntimeException("File Path is not specified in the propertyFiles");
+	}
 
 }
