@@ -17,16 +17,18 @@ import com.springBoot.Utils.ExtentManager;
 import com.springBoot.Utils.FileReader;
 import com.springBoot.Utils.PropertyFileReader;
 
-
 public class qaUrlLaunch {
 	public ExtentReports rep = ExtentManager.getInstance();
 	// ExtentReports report;
 	ExtentTest logger;
 	WebDriver driver;
 	String sourceFile = "Beta_AddPatientTestData.xlsx";
+	PropertyFileReader ChromedriverPath;
+
 	@BeforeTest
 	public void BeforeClass() {
-		PropertyFileReader ChromedriverPath = new PropertyFileReader();
+		ChromedriverPath = new PropertyFileReader();
+
 		System.setProperty("webdriver.chrome.driver", ChromedriverPath.driverPath());
 		driver = new ChromeDriver();
 
@@ -36,7 +38,12 @@ public class qaUrlLaunch {
 	public void QALogin() {
 
 		try {
+
 			logger = rep.startTest("qaUrlLaunch");
+			/* Property File Declaration */
+			String incommingfolder = ChromedriverPath.fileLoactionToLoad();
+			String ProcessingFolder = ChromedriverPath.processingfolder();
+			/* Input Declaration */
 			String appUrl = "https://dev.gsihealth.net";
 			driver.get(appUrl);
 			driver.manage().window().maximize();
@@ -51,26 +58,17 @@ public class qaUrlLaunch {
 				logger.log(LogStatus.FAIL, "QA Url is loaded");
 			}
 
-	/* Code to move the file from one folder to another folder */
+			/* Code to move the file from one folder to another folder */
 			FileReader.copy(sourceFile);
 			System.out.println("File moved to Destination folder");
 			logger.log(LogStatus.PASS, "File moved to Destination folder");
-			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 			/* To Verify the Moved file is still exist on the incomming folder */
-			File f = new File("S:\\PL_Uploads\\GSI COMMUNITY 102\\incoming\\Beta_AddPatientTestData.xlsx");
-			Boolean isFound = false;
-			while (isFound != true) {
-				System.out.println("LootStatementTrue");
-				if (f.exists()) {
-					isFound = false;
-				} else {
-					System.out.println("File Is Moved Out from Incomming Folder");
-					logger.log(LogStatus.INFO, "File Is Moved Out from Incomming Folder");
-					break;
-				}
+			FileReader.checkProcessingFolder(incommingfolder, sourceFile);
 
-			}
-
+			logger.log(LogStatus.INFO, "File Is Moved Out from Incomming Folder");
+			/* To verify the file is placed on the Processing folder */
+			FileReader.checkProcessingFolder(ProcessingFolder, sourceFile);
+			logger.log(LogStatus.INFO, "File Is Moved Out from Processing Folder");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
