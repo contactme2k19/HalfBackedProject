@@ -69,4 +69,19 @@ public class PropertyFileReader {
 		else
 			throw new RuntimeException("File Path is not specified in the propertyFiles");
 	}
+	public String completedfolder() {
+		String completedfolderPath = properties.getProperty("completed");
+		if (completedfolderPath != null)
+			return completedfolderPath;
+		else
+			throw new RuntimeException("File Path is not specified in the propertyFiles");
+	}
+	public String rejectedfolder() {
+		String rejectedfolderPath = properties.getProperty("rejected");
+		if (rejectedfolderPath != null)
+			return rejectedfolderPath;
+		else
+			throw new RuntimeException("File Path is not specified in the propertyFiles");
+	}
+
 }

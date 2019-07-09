@@ -5,8 +5,8 @@
          
   <test name="PatientLoader">
 	 <classes>
-	   <!--<class name="com.springBoot.Admin.sampleProject"/>-->
-	   <class name="com.springBoot.Admin.qaUrlLaunch"/>
+	  <class name="com.springBoot.Admin.addPatientWithAllDemograpicValues"/>
+	    <!--<class name="com.springBoot.Admin.qaUrlLaunch"/>-->
 	  
 	 </classes>
    </test>

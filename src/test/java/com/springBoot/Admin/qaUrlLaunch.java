@@ -22,8 +22,9 @@ public class qaUrlLaunch {
 	// ExtentReports report;
 	ExtentTest logger;
 	WebDriver driver;
-	String sourceFile = "Beta_AddPatientTestData.xlsx";
+	String sourceFile = "852_ESCROW3_SmokeTest_REAdd.xlsx";
 	PropertyFileReader ChromedriverPath;
+	boolean STATUS=false;
 
 	@BeforeTest
 	public void BeforeClass() {
@@ -43,8 +44,33 @@ public class qaUrlLaunch {
 			/* Property File Declaration */
 			String incommingfolder = ChromedriverPath.fileLoactionToLoad();
 			String ProcessingFolder = ChromedriverPath.processingfolder();
+			String CompletedFolder=ChromedriverPath.completedfolder();
+		//	String RejectedFolder=ChromedriverPath.rejectedfolder();
 			/* Input Declaration */
 			String appUrl = "https://dev.gsihealth.net";
+			
+			/* Code to move the file from one folder to another folder */
+			FileReader.copy(sourceFile);
+			System.out.println("File moved to Destination folder");
+			logger.log(LogStatus.PASS, "File moved to Destination folder");
+			/* To Verify the Moved file is still exist on the incomming folder */
+			boolean incommingCheck=FileReader.checkProcessingFolder(incommingfolder, sourceFile);
+			if(incommingCheck==false) {
+			FileReader.checkProcessingFolder(incommingfolder, sourceFile);
+
+			logger.log(LogStatus.INFO, "File Is Moved Out from Incomming Folder");
+			}else {logger.log(LogStatus.FAIL, "File Is Not Moved Out from Incomming Folder");
+			}
+			/*FileReader.checkProcessingFolder(incommingfolder, sourceFile);
+			logger.log(LogStatus.INFO, "File Is Moved Out from Incomming Folder");
+			/* To verify the file is placed on the Processing folder */
+			FileReader.checkProcessingFolder(ProcessingFolder, sourceFile);
+			logger.log(LogStatus.INFO, "File Is Moved Out from Processing Folder");
+			/* To verify the file is placed on the Completed folder */
+			
+			FileReader.checkProcessingFolder(CompletedFolder, sourceFile);
+			logger.log(LogStatus.INFO, "File Is in Completed Folder");
+			
 			driver.get(appUrl);
 			driver.manage().window().maximize();
 			logger.log(LogStatus.PASS, "Launch browser and load an URL for QA environment");
@@ -58,17 +84,7 @@ public class qaUrlLaunch {
 				logger.log(LogStatus.FAIL, "QA Url is loaded");
 			}
 
-			/* Code to move the file from one folder to another folder */
-			FileReader.copy(sourceFile);
-			System.out.println("File moved to Destination folder");
-			logger.log(LogStatus.PASS, "File moved to Destination folder");
-			/* To Verify the Moved file is still exist on the incomming folder */
-			FileReader.checkProcessingFolder(incommingfolder, sourceFile);
-
-			logger.log(LogStatus.INFO, "File Is Moved Out from Incomming Folder");
-			/* To verify the file is placed on the Processing folder */
-			FileReader.checkProcessingFolder(ProcessingFolder, sourceFile);
-			logger.log(LogStatus.INFO, "File Is Moved Out from Processing Folder");
+		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
